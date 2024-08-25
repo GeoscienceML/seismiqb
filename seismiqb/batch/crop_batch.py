@@ -272,9 +272,9 @@ class SeismicCropBatch(Batch, VisualizationMixin):
         locations = self.get(ix, 'locations')
         orientation = self.get(ix, 'orientations')
 
+        field.load_seismic(locations=locations, src=src_geometry, buffer=buffer, **kwargs)
         if orientation == 1:
             buffer = buffer.transpose(1, 0, 2)
-        field.load_seismic(locations=locations, src=src_geometry, buffer=buffer, **kwargs)
 
     load_cubes = load_crops = load_seismic
 
