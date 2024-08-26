@@ -507,10 +507,10 @@ class GeometrySEGY(Geometry):
 
         if axis in {0, 1} or shape[-1] > 50: #TODO: explain this constant
             indices = self.index_matrix[locations[0], locations[1]].reshape(-1)
-            buffer = self.load_by_indices(indices=indices, limits=locations[-1], buffer=buffer)
+            buffer_ = self.load_by_indices(indices=indices, limits=locations[-1], buffer=buffer)
 
             shape = [((slc.stop or stop) - (slc.start or 0)) for slc, stop in zip(locations, self.shape)]
-            buffer = buffer.reshape(shape)
+            buffer[:] = buffer_.reshape(shape)
         else:
             indices = np.arange(locations[-1].start, locations[-1].stop)
             data = self.load_depth_slices(indices).transpose(1, 2, 0)[locations[0], locations[1]]
