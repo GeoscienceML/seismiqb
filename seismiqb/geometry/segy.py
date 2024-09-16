@@ -510,7 +510,10 @@ class GeometrySEGY(Geometry):
             buffer_ = self.load_by_indices(indices=indices, limits=locations[-1], buffer=buffer)
 
             shape = [((slc.stop or stop) - (slc.start or 0)) for slc, stop in zip(locations, self.shape)]
-            buffer[:] = buffer_.reshape(shape)
+            if buffer is not None:
+                buffer[:] = buffer_.reshape(shape)
+            else:
+                buffer = buffer_.reshape(shape)
         else:
             indices = np.arange(locations[-1].start, locations[-1].stop)
             data = self.load_depth_slices(indices).transpose(1, 2, 0)[locations[0], locations[1]]
